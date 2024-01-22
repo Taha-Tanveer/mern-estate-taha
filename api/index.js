@@ -20,3 +20,16 @@ app.listen(3000, () => {
 });
 app.use("/api/user",userrouter);
 app.use("/api/auth",authrouter);
+
+
+// middleware for error
+
+app.use((err,req,res,next)=>{
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || "Internal Server Error";
+    return res.status(errorStatus).json({
+        success:false,
+        status:errorStatus,
+        message:errorMessage,
+    });
+})
